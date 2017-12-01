@@ -4,24 +4,21 @@ class UserWordList {
 
     public function getTextfileContent($filename) {
         try {
-            // echo $filename;
+
             $Content = array();
             $allWords = array();
-            
-            $filepath =dirname(__FILE__)."/";
-            $handle = fopen($filepath . $filename, "r") or die("Couldn't get handle");
+
+            $filepath = dirname(__FILE__) . "/";
+            $handle = fopen($filepath . $filename, "r") or die("Couldn't open file");
             if ($handle) {
                 while (!feof($handle)) {
                     $buffer = fgets($handle, 4096);
                     $words = explode(' ', $buffer);
                     $allWords = array_merge($allWords, $words);
-                    // Process buffer here..
-                    // $Content[] = explode(" ", $buffer);
                 }
                 fclose($handle);
             }
             return array_values(array_unique($allWords));
-            // return $Content;
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -37,9 +34,7 @@ class UserWordList {
         return $dir;
     }
 
-    public function AddWordContent($content, $filename) {
-        //echo "<pre>";
-        // print_r($content);
+    public function AddWordContent($content, $filename) {      
         $objDB = new db();
         foreach ($content as $res) {
             $word_name = $res;
